@@ -4,8 +4,10 @@ import {
   InferGetServerSidePropsType,
 } from "next";
 import { unstable_getServerSession } from "next-auth";
+import Table from "../../../components/MaterialTable/Table";
 
 import Workspace from "../../../components/WorkspaceWrapper";
+import { columnsSingleLibelle } from "../../../constants/tableColumns";
 import { authOptions } from "../../api/auth/[...nextauth]";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -34,12 +36,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 const Index: NextPage = (
   props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) => {
-
-
   return (
-     <Workspace>
-      <span>types</span>
-     </Workspace>
+    <Workspace>
+      <Table title="Type" columns={columnsSingleLibelle} endpoint="type" />
+    </Workspace>
   );
 };
 

@@ -15,6 +15,7 @@ import Table, { TColumns } from "../../../components/MaterialTable/Table";
 import { Prisma } from "@prisma/client";
 import { prisma } from "../../../server/db/client";
 import { trpc } from "../../../utils/trpc";
+import { columnsSingleLibelle } from "../../../constants/tableColumns";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
@@ -41,12 +42,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 };
 
-const columns: Array<TColumns> = [
-  {
-    title: "Libellé",
-    field: "libelle",
-  },
-];
+
 
 const Index: NextPage = (
   props: InferGetServerSidePropsType<typeof getServerSideProps>
@@ -68,7 +64,7 @@ const Index: NextPage = (
   // };
   return (
     <Workspace>
-      <Table title="Préstation" columns={columns} endpoint="prestation" />
+      <Table title="Préstation" columns={columnsSingleLibelle} endpoint="prestation" />
     </Workspace>
   );
 };

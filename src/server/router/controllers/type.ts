@@ -2,12 +2,12 @@ import { createRouter } from "./../context";
 import { z } from "zod";
 
 
-const table='prestation'
-export const prestationRouter = createRouter()
+const table='type'
+export const typeRouter = createRouter()
   .query("getAll", {
     async resolve({ ctx }) {
-      console.log("request getAll");
-      return await ctx.prisma.prestation.findMany({
+     
+      return await ctx.prisma[table].findMany({
         where: {
           id_user: {
             equals: ctx.session?.user?.id,
@@ -23,7 +23,7 @@ export const prestationRouter = createRouter()
     async resolve({ input, ctx }) {
       const { session, prisma } = ctx;
 
-      const data = await prisma.prestation.create({
+      const data = await prisma[table].create({
         data: {
           libelle: input.libelle,
           id_user: session?.user?.id!,
@@ -38,7 +38,7 @@ export const prestationRouter = createRouter()
       libelle: z.string(),
     }),
     async resolve({ input, ctx }) {
-      return await ctx.prisma.prestation.update({
+      return await ctx.prisma[table].update({
         where: {
           id: input.id,
         },
@@ -53,7 +53,7 @@ export const prestationRouter = createRouter()
       id: z.string(),
     }),
     async resolve({ input, ctx }) {
-      return await ctx.prisma.prestation.delete({
+      return await ctx.prisma[table].delete({
         where: {
           id: input.id,
         },
