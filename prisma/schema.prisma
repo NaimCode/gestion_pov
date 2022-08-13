@@ -105,7 +105,7 @@ model Contact {
 
 model Participant {
     id        String @id @default(cuid())
-    name      String
+    nom      String
     id_seance String @unique
     seance    Seance @relation(fields: [id_seance], references: [id], onDelete: Cascade)
 }

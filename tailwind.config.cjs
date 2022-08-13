@@ -9,6 +9,9 @@ module.exports = {
         title: ["Sora", "sans-serif"],
         //  logo: ["orbitron", "sans-serif"],
       },
+      colors: {
+        primary: "#934b97",
+      },
     },
   },
   plugins: [],
