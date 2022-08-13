@@ -4,12 +4,12 @@ import superjson from "superjson";
 
 import { exampleRouter } from "./example";
 import { protectedExampleRouter } from "./protected-example-router";
+import { prestationRouter } from "./controllers/prestation";
 
 
 export const appRouter = createRouter()
   .transformer(superjson)
-  .merge("example.", exampleRouter)
-  .merge("question.", protectedExampleRouter)
+  .merge("prestation.", prestationRouter);
 
   ;
 

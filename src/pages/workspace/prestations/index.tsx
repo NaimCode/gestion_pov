@@ -1,4 +1,3 @@
-
 import {
   GetServerSideProps,
   NextPage,
@@ -9,10 +8,13 @@ import { useMemo } from "react";
 
 import Workspace from "../../../components/WorkspaceWrapper";
 import { authOptions } from "../../api/auth/[...nextauth]";
-import { useTable } from 'react-table';
+import { useTable } from "react-table";
 import MaterialTable from "material-table";
 import { ThemeProvider, createTheme } from "@mui/material";
 import Table, { TColumns } from "../../../components/MaterialTable/Table";
+import { Prisma } from "@prisma/client";
+import { prisma } from "../../../server/db/client";
+import { trpc } from "../../../utils/trpc";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
@@ -28,33 +30,46 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         permanent: true,
       },
     };
+  } else {
+    
+    return {
+      props: {
+        session,
+     
+      },
+    };
   }
-
-  return {
-    props: {
-      session,
-    },
-  };
 };
 
-const columns:Array<TColumns>=[{
-  title:"Libellé",
-  field:"libelle",
-
-}]
+const columns: Array<TColumns> = [
+  {
+    title: "Libellé",
+    field: "libelle",
+  },
+];
 
 const Index: NextPage = (
   props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) => {
-const data=[{
-  libelle:"hey"},
-  {
-    libelle:"heydd"}
-]
+
+  // console.log(data);
+  // //var mutation from trpc
+  // const mutation = trpc.useMutation("prestation.create");
+
+  // const onAdd = ({ newData, resolve, reject }: any) => {
+  //   mutation.mutate(newData);
+  //   console.log("error", mutation.error);
+  //   console.log("data", mutation.data);
+  //   if (mutation.error) {
+  //     reject();
+  //   } else {
+  //     resolve();
+  //   }
+  // };
   return (
-     <Workspace>
-      <Table title="Préstation" columns={columns} data={data}/>
-     </Workspace>
+    <Workspace>
+      <Table title="Préstation" columns={columns} endpoint="prestation" />
+    </Workspace>
   );
 };
 

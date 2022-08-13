@@ -1,29 +1,73 @@
-import { Input } from "@geist-ui/core";
-import { MuiThemeProvider } from "@material-ui/core";
 
-import { amber } from "@mui/material/colors";
 import MaterialTable from "material-table";
 import { tableIcons } from "./Icons";
 import { TableComponents } from './Components';
+import { trpc } from "../../utils/trpc";
+import { useState } from "react";
 
 export type TColumns = {
   title: string;
   field: string;
   cellStyle?: Object;
+
+  
 };
 type TableProps = {
   columns: Array<TColumns>;
-  data: Array<Object>;
   title: string;
   portrait?: boolean;
+  endpoint:string
 };
-const Table = ({ columns, data, title, portrait }: TableProps) => {
+const Table = ({ columns, title, portrait,endpoint }: TableProps) => {
+  const afterEffectHandler = {
+    onSuccess: () => {
+      query.refetch();
+    },
+    onError: (data:any) => {
+      console.log(data);
+      //call notification
 
+      
+    }
+  }
+  const query = trpc.useQuery([(endpoint+".getAll") as any]);
+  const mutationCreate=trpc.useMutation([(endpoint+".create") as any],afterEffectHandler);
+  const mutationUpdate=trpc.useMutation([(endpoint+".update") as any],afterEffectHandler);
+  const mutationDelete=trpc.useMutation([(endpoint+".delete") as any],afterEffectHandler);
+ 
+  const onAdd =async ({ newData, resolve, reject }: any) => {
+   mutationCreate.mutate(newData)
+    if (mutationCreate.error) {
+      reject();
+    } else {
+      await query.refetch();
+      resolve();
+    }
+  };
+  const onDelete =async ({ newData, resolve, reject }: any) => {
+    mutationDelete.mutate({id:newData.id})
+     if (mutationDelete.error) {
+       reject();
+     } else {
+       await query.refetch();
+       resolve();
+     }
+   };
+   const onUpdate =async ({ newData, resolve, reject }: any) => {
+    mutationUpdate.mutate(newData)
+     if (mutationUpdate.error) {
+       reject();
+     } else {
+       await query.refetch();
+       resolve();
+     }
+   };
   return (
     <div className="py-5 px-5">
       <MaterialTable
+        isLoading={query.isLoading || mutationCreate.isLoading || mutationUpdate.isLoading || mutationDelete.isLoading}
         columns={columns}
-        data={data}
+        data={query.data as any}
         title={title}
         components={TableComponents}
         localization={localisation}
@@ -48,22 +92,22 @@ const Table = ({ columns, data, title, portrait }: TableProps) => {
         editable={{
           onRowAdd: (newData) =>
             new Promise((resolve, reject) => {
-              setTimeout(() => {
-                /* setData([...data, newData]); */
-                // addRow(newData, resolve, reject);
-              }, 1000);
+            
+               onAdd({newData,resolve,reject})
+            
             }),
           onRowUpdate: (newData, oldData) =>
             new Promise((resolve, reject) => {
-              setTimeout(() => {
-                // updateRow(oldData, newData, resolve, reject);
-              }, 1000);
+          
+                onUpdate({newData,resolve,reject})
+         
             }),
           onRowDelete: (oldData) =>
             new Promise((resolve, reject) => {
-              setTimeout(() => {
-                //deleteRow(oldData, resolve, reject);
-              }, 1000);
+            
+                onDelete({newData:oldData,resolve,reject})
+         
+          
             }),
         }}
       />

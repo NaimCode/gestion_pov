@@ -71,12 +71,14 @@ model Type {
 
 model Prestation {
     id      String  @id @default(cuid())
+    id_user String
     libelle String
     suivis  Suivi[]
 }
 
 model Appliance {
     id      String @id @default(cuid())
+     id_user String
     libelle String
     id_type String @unique
     type    Type   @relation(fields: [id_type], references: [id], onDelete: Cascade)
@@ -85,6 +87,7 @@ model Appliance {
 
 model Client {
     id       String    @id @default(cuid())
+     id_user String
     libelle  String
     secteur  String
     activite String
@@ -94,6 +97,7 @@ model Client {
 
 model Contact {
     id        String @id @default(cuid())
+     id_user String
     nom       String
     prenom    String
     telephone String
@@ -105,6 +109,7 @@ model Contact {
 
 model Participant {
     id        String @id @default(cuid())
+     id_user String
     nom      String
     id_seance String @unique
     seance    Seance @relation(fields: [id_seance], references: [id], onDelete: Cascade)
@@ -112,6 +117,7 @@ model Participant {
 
 model Seance {
     id           String        @id @default(cuid())
+     id_user String
     date         DateTime
     resume       String
     participants Participant[]
@@ -121,6 +127,7 @@ model Seance {
 
 model Suivi {
     id                String     @id @default(cuid())
+     id_user String
     offre_commerciale String
     montant           Float
     compte_rendu      String
@@ -132,6 +139,7 @@ model Suivi {
 
 model Pov {
     id                      String    @id @default(cuid())
+     id_user String
     libelle                 String
     date_debut              DateTime
     date_fin                DateTime
