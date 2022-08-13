@@ -37,9 +37,11 @@ const Index: NextPage = (
 
 
   return (
-     <Workspace>
+  <section>
+       <Workspace>
       <span>POV</span>
      </Workspace>
+  </section>
   );
 };
 
