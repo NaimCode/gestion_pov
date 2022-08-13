@@ -1,8 +1,10 @@
+import { Input } from "@geist-ui/core";
 import { MuiThemeProvider } from "@material-ui/core";
-import { ThemeProvider, createTheme, Paper } from "@mui/material";
+
 import { amber } from "@mui/material/colors";
 import MaterialTable from "material-table";
 import { tableIcons } from "./Icons";
+import { TableComponents } from './Components';
 
 export type TColumns = {
   title: string;
@@ -16,70 +18,55 @@ type TableProps = {
   portrait?: boolean;
 };
 const Table = ({ columns, data, title, portrait }: TableProps) => {
-  const defaultMaterialTheme = createTheme({
-    palette: {
-      primary: amber,
-    },components:{
-        MuiDivider:{
-            styleOverrides:{
-                root: {
-                    // Some CSS
-                    backgroundColor: 'yellow',
-                  },
-            }
-        }
-    }
-  });
+
   return (
     <div className="py-5 px-5">
-     
-        <MaterialTable
-          columns={columns}
-          data={data}
-          title={title}
-          components={{
-            Container: (props) => <Paper {...props} elevation={0} />,
-          }}
-          localization={localisation}
-          icons={tableIcons as any}
-          options={{
-            exportButton: true,
-            tableLayout: "auto",
-            exportAllData: true,
+      <MaterialTable
+        columns={columns}
+        data={data}
+        title={title}
+        components={TableComponents}
+        localization={localisation}
+        icons={tableIcons as any}
+        options={{
+          exportButton: true,
+          tableLayout: "auto",
+          exportAllData: true,
+          paging: true,
 
-            headerStyle: {
-              backgroundColor: "#934b97",
-              color: "#FFF",
-              fontWeight: "bold",
-            },
-            rowStyle: {
-            
-              border:'0px solid white'
-            }
-          }}
-          editable={{
-            onRowAdd: (newData) =>
-              new Promise((resolve, reject) => {
-                setTimeout(() => {
-                  /* setData([...data, newData]); */
-                  // addRow(newData, resolve, reject);
-                }, 1000);
-              }),
-            onRowUpdate: (newData, oldData) =>
-              new Promise((resolve, reject) => {
-                setTimeout(() => {
-                  // updateRow(oldData, newData, resolve, reject);
-                }, 1000);
-              }),
-            onRowDelete: (oldData) =>
-              new Promise((resolve, reject) => {
-                setTimeout(() => {
-                  //deleteRow(oldData, resolve, reject);
-                }, 1000);
-              }),
-          }}
-        />
-  
+          paginationType: "stepped",
+          headerStyle: {
+            backgroundColor: "#934b97",
+            color: "#FFF",
+            fontWeight: "bold",
+          },
+          rowStyle: {
+            border: "0px solid white",
+          },
+        }}
+      
+        editable={{
+          onRowAdd: (newData) =>
+            new Promise((resolve, reject) => {
+              setTimeout(() => {
+                /* setData([...data, newData]); */
+                // addRow(newData, resolve, reject);
+              }, 1000);
+            }),
+          onRowUpdate: (newData, oldData) =>
+            new Promise((resolve, reject) => {
+              setTimeout(() => {
+                // updateRow(oldData, newData, resolve, reject);
+              }, 1000);
+            }),
+          onRowDelete: (oldData) =>
+            new Promise((resolve, reject) => {
+              setTimeout(() => {
+                //deleteRow(oldData, resolve, reject);
+              }, 1000);
+            }),
+        }}
+      />
     </div>
   );
 };

@@ -18,13 +18,15 @@ import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import {AiOutlineEdit,AiFillCheckCircle} from 'react-icons/ai'
 import {MdDeleteOutline} from 'react-icons/md'
+
 export const tableIcons = {
     Add: forwardRef((props:any, ref:any) => <AddBox {...props} ref={ref} />),
     Check: forwardRef((props:any, ref:any) => <AiFillCheckCircle {...props} ref={ref} />),
     Clear: forwardRef((props:any, ref:any) => <Clear {...props} ref={ref} />),
-    Delete: forwardRef((props:any, ref:any) => <MdDeleteOutline {...props} ref={ref}/>),
+    Delete: forwardRef((props:any, ref:any) => <MdDeleteOutline {...props} ref={ref} className="opacity-40 transition-all hover:opacity-100 hover:text-red-500"/>),
     DetailPanel: forwardRef((props:any, ref:any) => <ChevronRight {...props} ref={ref} />),
-    Edit: forwardRef((props:any, ref:any) => <AiOutlineEdit {...props} ref={ref} />),
+    //
+    Edit: forwardRef((props:any, ref:any) => <AiOutlineEdit {...props} ref={ref} className="opacity-40 transition-all hover:opacity-100 hover:text-blue-500" />),
     Export: forwardRef((props:any, ref:any) => <SaveAlt {...props} ref={ref} />),
     Filter: forwardRef((props:any, ref:any) => <FilterList {...props} ref={ref} />),
     FirstPage: forwardRef((props:any, ref:any) => <FirstPage {...props} ref={ref} />),
