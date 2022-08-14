@@ -4,7 +4,7 @@ export const TableComponents = {
   Container: (props: any) => <Paper {...props} elevation={0} />,
   EditField: (props: any) => (
     <Input
-    clearable
+      clearable
       value={props.value}
       onChange={(e: any) => props.onChange(e.target.value)}
      

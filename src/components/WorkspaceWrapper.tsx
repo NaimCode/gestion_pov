@@ -33,7 +33,7 @@ const Workspace: NextPage<{ children: ReactNode }> = ({
   const router = useRouter();
 
   return (
-    <main className="relative flex flex-row   h-screen">
+    <main className="relative flex flex-row   h-screen overflow-hidden w-screen">
       <Head title={user.name!} description={`Mon workspace`} />
 
       <div className="min-w-[200px] h-full  border-r-[1px] border-gray-200 flex flex-col items-center">
@@ -67,9 +67,9 @@ const Workspace: NextPage<{ children: ReactNode }> = ({
         </div>
       </div>
 
-      <div className="flex-grow relative">
+      <div className="flex-grow relative overflow-hidden">
         <NavBarWorkpace session={session} />
-        <div className="w-full">{children}</div>
+        <div  className="w-full overflow-scroll">{children}</div>
       </div>
     </main>
   );

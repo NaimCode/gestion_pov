@@ -42,7 +42,7 @@ const Table = ({ columns, title, portrait,endpoint ,filter,filter_id}: TableProp
   const onAdd =async ({ newData, resolve, reject }: any) => {
     const sendData=filter_id?{...newData,filter_id}:newData
    mutationCreate.mutate(sendData)
-    if (mutationCreate.error) {
+    if (mutationCreate.error||mutationCreate.data===null) {
       reject();
     } else {
       await query.refetch();
@@ -51,7 +51,7 @@ const Table = ({ columns, title, portrait,endpoint ,filter,filter_id}: TableProp
   };
   const onDelete =async ({ newData, resolve, reject }: any) => {
     mutationDelete.mutate({id:newData.id})
-     if (mutationDelete.error) {
+     if (mutationDelete.error ) {
        reject();
      } else {
        await query.refetch();
