@@ -7,13 +7,15 @@ import { protectedExampleRouter } from "./protected-example-router";
 import { prestationRouter } from "./controllers/prestation";
 import { typeRouter } from "./controllers/type";
 import { userRouter } from "./user";
+import { applianceRouter } from "./controllers/appliance";
 
 
 export const appRouter = createRouter()
   .transformer(superjson)
   .merge("prestation.", prestationRouter)
   .merge("type.", typeRouter)
-  .merge("user.", userRouter);
+  .merge("user.", userRouter)
+  .merge('appliance.',applianceRouter)
   ;
 
 // export type definition of API

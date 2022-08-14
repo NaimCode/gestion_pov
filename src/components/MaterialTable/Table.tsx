@@ -3,22 +3,24 @@ import MaterialTable from "material-table";
 import { tableIcons } from "./Icons";
 import { TableComponents } from './Components';
 import { trpc } from "../../utils/trpc";
-import { useState } from "react";
 
 export type TColumns = {
   title: string;
   field: string;
   cellStyle?: Object;
-
+  align?:any;
+  editComponent?:any
+  render?:any
   
 };
 type TableProps = {
   columns: Array<TColumns>;
   title: string;
   portrait?: boolean;
-  endpoint:string
+  endpoint:string,
+  filter?:Function
 };
-const Table = ({ columns, title, portrait,endpoint }: TableProps) => {
+const Table = ({ columns, title, portrait,endpoint ,filter}: TableProps) => {
   const afterEffectHandler = {
     onSuccess: () => {
       query.refetch();
@@ -67,7 +69,7 @@ const Table = ({ columns, title, portrait,endpoint }: TableProps) => {
       <MaterialTable
         isLoading={query.isLoading || mutationCreate.isLoading || mutationUpdate.isLoading || mutationDelete.isLoading}
         columns={columns}
-        data={query.data as any}
+        data={filter?filter(query.data) as any:query.data as any}
         title={title}
         components={TableComponents}
         localization={localisation}
@@ -84,9 +86,7 @@ const Table = ({ columns, title, portrait,endpoint }: TableProps) => {
             color: "#FFF",
             fontWeight: "bold",
           },
-          rowStyle: {
-            border: "0px solid white",
-          },
+         
         }}
       
         editable={{

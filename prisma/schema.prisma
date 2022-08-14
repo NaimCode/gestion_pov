@@ -81,9 +81,12 @@ model Appliance {
     id      String @id @default(cuid())
     id_user String
     libelle String
-    id_type String @unique
-    type    Type   @relation(fields: [id_type], references: [id], onDelete: Cascade)
-    pov     Pov?
+    disponibilite Boolean
+    dbid String
+    reference String
+    id_type String 
+    type    Type   @relation(fields: [id_type], references: [id])
+    povs     Pov[]
 }
 
 model Client {
@@ -93,7 +96,7 @@ model Client {
     secteur  String
     activite String
     contacts Contact[]
-    pov      Pov?
+    povs     Pov[]
 }
 
 model Contact {
@@ -104,16 +107,16 @@ model Contact {
     telephone String
     email     String
     fonction  String
-    id_client String @unique
-    client    Client @relation(fields: [id_client], references: [id], onDelete: Cascade)
+    id_client String 
+    client    Client @relation(fields: [id_client], references: [id])
 }
 
 model Participant {
     id        String @id @default(cuid())
     id_user   String
     nom       String
-    id_seance String @unique
-    seance    Seance @relation(fields: [id_seance], references: [id], onDelete: Cascade)
+    id_seance String 
+    seance    Seance @relation(fields: [id_seance], references: [id])
 }
 
 model Seance {
@@ -123,7 +126,7 @@ model Seance {
     resume       String
     participants Participant[]
     id_pov       String        @unique
-    pov          Pov           @relation(fields: [id_pov], references: [id], onDelete: Cascade)
+    pov          Pov           @relation(fields: [id_pov], references: [id])
 }
 
 model Suivi {
@@ -132,10 +135,10 @@ model Suivi {
     offre_commerciale String
     montant           Float
     compte_rendu      String
-    id_prestation     String     @unique
-    id_pov            String     @unique
-    prestation        Prestation @relation(fields: [id_prestation], references: [id], onDelete: Cascade)
-    pov               Pov        @relation(fields: [id_pov], references: [id], onDelete: Cascade)
+    id_prestation     String     
+    id_pov            String     
+    prestation        Prestation @relation(fields: [id_prestation], references: [id])
+    pov               Pov        @relation(fields: [id_pov], references: [id])
 }
 
 model Pov {
@@ -150,8 +153,8 @@ model Pov {
     analyste_cybersecurite  String
     suivis                  Suivi[]
     seances                 Seance[]
-    id_client               String    @unique
-    client                  Client    @relation(fields: [id_client], references: [id], onDelete: Cascade)
-    id_appliance            String    @unique
-    appliance               Appliance @relation(fields: [id_appliance], references: [id], onDelete: Cascade)
+    id_client               String    
+    client                  Client    @relation(fields: [id_client], references: [id])
+    id_appliance            String    
+    appliance               Appliance @relation(fields: [id_appliance], references: [id])
 }
