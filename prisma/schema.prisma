@@ -158,3 +158,5 @@ model Pov {
     id_appliance            String    
     appliance               Appliance @relation(fields: [id_appliance], references: [id])
 }
+
+

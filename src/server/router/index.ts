@@ -8,6 +8,7 @@ import { prestationRouter } from "./controllers/prestation";
 import { typeRouter } from "./controllers/type";
 import { userRouter } from "./user";
 import { applianceRouter } from "./controllers/appliance";
+import { clientRouter } from "./controllers/client";
 
 
 export const appRouter = createRouter()
@@ -16,6 +17,7 @@ export const appRouter = createRouter()
   .merge("type.", typeRouter)
   .merge("user.", userRouter)
   .merge('appliance.',applianceRouter)
+  .merge('client.',clientRouter)
   ;
 
 // export type definition of API
