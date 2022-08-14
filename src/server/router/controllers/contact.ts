@@ -21,7 +21,11 @@ export const contactRouter = createRouter()
     input: z.any(),
     async resolve({ input, ctx }) {
       const { session, prisma } = ctx;
-      const client = await prisma.client.findFirst({
+      const client =input.filter_id?await prisma.client.findFirst({
+        where:{
+          id:input.filter_id
+        }
+      }): await prisma.client.findFirst({
         where: {
           libelle: {
             equals: input.client.libelle,
@@ -30,6 +34,7 @@ export const contactRouter = createRouter()
       });
       console.log(input);
       delete input.client;
+      delete input.filter_id;
       const data = await prisma[table]
         .create({
           data: {

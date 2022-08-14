@@ -36,7 +36,7 @@ const Workspace: NextPage<{ children: ReactNode }> = ({
     <main className="relative flex flex-row   h-screen">
       <Head title={user.name!} description={`Mon workspace`} />
 
-      <div className="w-[230px] h-full  border-r-[1px] border-gray-200 flex flex-col items-center">
+      <div className="min-w-[200px] h-full  border-r-[1px] border-gray-200 flex flex-col items-center">
         <div className=" h-[70px] flex justify-center items-center w-full border-b-[1px] border-gray-200">
           <div className="scale-75">
             <LogoBrand />
@@ -50,7 +50,7 @@ const Workspace: NextPage<{ children: ReactNode }> = ({
               <>
                 <button
                   onClick={() =>
-                    router.push(item.route, undefined, { shallow: true })
+                    router.push(item.route)
                   }
                   key={index}
                   className={`cursor-pointer duration-500 opacity-60 hover:opacity-100 font-semibold flex flex-row items-center gap-2 px-2 py-1 ${

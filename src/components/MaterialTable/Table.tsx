@@ -19,9 +19,10 @@ type TableProps = {
   portrait?: boolean;
   endpoint:string,
   filter?:Function,
+  filter_id?:string
  
 };
-const Table = ({ columns, title, portrait,endpoint ,filter}: TableProps) => {
+const Table = ({ columns, title, portrait,endpoint ,filter,filter_id}: TableProps) => {
   const afterEffectHandler = {
     onSuccess: () => {
       query.refetch();
@@ -39,7 +40,8 @@ const Table = ({ columns, title, portrait,endpoint ,filter}: TableProps) => {
   const mutationDelete=trpc.useMutation([(endpoint+".delete") as any],afterEffectHandler);
  
   const onAdd =async ({ newData, resolve, reject }: any) => {
-   mutationCreate.mutate(newData)
+    const sendData=filter_id?{...newData,filter_id}:newData
+   mutationCreate.mutate(sendData)
     if (mutationCreate.error) {
       reject();
     } else {

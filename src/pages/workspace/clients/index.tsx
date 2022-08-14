@@ -86,7 +86,7 @@ const Index: NextPage = (
 
       render: (rowData: any) => (
         <Button
-         onClick={()=>router.push(`/workspace/contacts?id_client=${rowData.id}`)}
+         onClick={()=>router.push(`/workspace/contacts/${rowData.id}`)}
          auto
          scale={3/4}
         >
