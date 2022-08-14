@@ -2,11 +2,8 @@ import type { NextPage } from "next";
 import Head from "../components/Head";
 
 import { APP_NAME } from "../constants/global";
-import { trpc } from "../utils/trpc";
-import { Button } from '@geist-ui/core';
 
 const Home: NextPage = (props) => {
-  const hello = trpc.useQuery(["example.hello", { text: "from tRPC" }]);
 
   return (
     <>

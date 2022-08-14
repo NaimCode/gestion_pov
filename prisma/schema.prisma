@@ -108,7 +108,7 @@ model Contact {
     email     String
     fonction  String
     id_client String 
-    client    Client @relation(fields: [id_client], references: [id])
+    client    Client @relation(fields: [id_client], references: [id],onDelete:Cascade)
 }
 
 model Participant {
