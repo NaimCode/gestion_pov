@@ -27,12 +27,24 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
     };
   }
-
+  console.log(context.query)
+const id_client=context.query.id_client
+if(id_client){
   return {
     props: {
       session,
+      id_client
     },
   };
+}else {
+  return {
+    props: {
+      session,
+     
+    },
+  };
+}
+ 
 };
 
 const index: NextPage = (props: InferGetServerSidePropsType<typeof getServerSideProps>) => {
@@ -73,12 +85,12 @@ const index: NextPage = (props: InferGetServerSidePropsType<typeof getServerSide
         }
     },
 
-    {
+   {
       title: "Client",
       field: "client.libelle",
       editComponent:(props:any)=>{
 
-       return <AutoComplete value={props.value}  onSelect={(e: any) => props.onChange(e)} disableFreeSolo options={client.data?.map((t,i)=>({label:t.libelle,value:t.libelle}))} />
+       return <AutoComplete value={props.value} initialValue={props.id_client?client.data?.filter((f)=>f.id==props.id_client)[0]?.libelle:undefined} disabled={props.id_client?true:false}  onSelect={(e: any) => props.onChange(e)} disableFreeSolo options={client.data?.map((t,i)=>({label:t.libelle,value:t.libelle}))} />
         
       }
    }, 
@@ -120,10 +132,11 @@ const index: NextPage = (props: InferGetServerSidePropsType<typeof getServerSide
 
   ];
 
+
   return (
  
        <Workspace>
-       <Table title="Contact" columns={columnsClient} endpoint="contact" />
+       <Table title="Contact"  columns={columnsClient}  endpoint="contact" />
      </Workspace>
   
   );

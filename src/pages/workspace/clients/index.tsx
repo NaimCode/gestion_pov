@@ -1,10 +1,11 @@
-import { AutoComplete } from "@geist-ui/core";
+import { AutoComplete, Button } from "@geist-ui/core";
 import {
   GetServerSideProps,
   NextPage,
   InferGetServerSidePropsType,
 } from "next";
 import { unstable_getServerSession } from "next-auth";
+import { useRouter } from "next/router";
 import Table, { TColumns } from "../../../components/MaterialTable/Table";
 
 import Workspace from "../../../components/WorkspaceWrapper";
@@ -36,6 +37,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 const Index: NextPage = (
   props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) => {
+  const router=useRouter()
   const columnsClient: Array<TColumns> = [
     {
       title: "Libellé",
@@ -76,6 +78,23 @@ const Index: NextPage = (
           ]}
         />
       ),
+
+    },
+    {
+      title: "Contacts",
+      field: "contacts",
+
+      render: (rowData: any) => (
+        <Button
+         onClick={()=>router.push(`/workspace/contacts?id_client=${rowData.id}`)}
+         auto
+         scale={3/4}
+        >
+         voir la liste
+        </Button>
+      ),
+
+      editComponent: (props: any) => (<span></span>),
     },
   ];
 

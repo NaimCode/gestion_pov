@@ -18,7 +18,8 @@ type TableProps = {
   title: string;
   portrait?: boolean;
   endpoint:string,
-  filter?:Function
+  filter?:Function,
+ 
 };
 const Table = ({ columns, title, portrait,endpoint ,filter}: TableProps) => {
   const afterEffectHandler = {
