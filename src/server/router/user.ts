@@ -19,5 +19,16 @@ export const userRouter = createRouter()
 
     
     }
+  }).mutation("delete", {
+
+    async resolve({ ctx }) {
+      return await ctx.prisma.user.delete({
+        where: {
+          email: 'naimdevelopper@gmail.com',
+          
+        }
+      });
+    }
   })
+
  
