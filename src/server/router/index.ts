@@ -11,6 +11,7 @@ import { applianceRouter } from "./controllers/appliance";
 import { clientRouter } from "./controllers/client";
 import { contactRouter } from "./controllers/contact";
 import { povRouter } from "./controllers/pov";
+import { suiviRouter } from "./controllers/suivi";
 
 
 export const appRouter = createRouter()
@@ -22,6 +23,7 @@ export const appRouter = createRouter()
   .merge('client.',clientRouter)
   .merge('contact.',contactRouter)
   .merge('pov.',povRouter)
+  .merge('suivi.',suiviRouter)
   ;
 
 // export type definition of API
