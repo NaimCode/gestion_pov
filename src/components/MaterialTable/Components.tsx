@@ -1,7 +1,8 @@
 import { Input } from "@geist-ui/core";
 import { ThemeProvider, createTheme, Paper, TextField } from "@mui/material";
 export const TableComponents = {
-  Container: (props: any) => <Paper {...props} elevation={0} />,
+  Container: (props: any) => <div {...props} className="shadow-md bg-white" />,
+ 
   EditField: (props: any) => (
     <Input
       clearable

@@ -36,14 +36,14 @@ const Workspace: NextPage<{ children: ReactNode }> = ({
     <main className="relative flex flex-row   h-screen overflow-hidden w-screen">
       <Head title={user.name!} description={`Mon workspace`} />
 
-      <div className="min-w-[250px] h-full  border-r-[1px] border-gray-200 flex flex-col items-center">
+      <div className="min-w-[250px]  h-full  border-r-[1px] border-gray-200 flex flex-col items-center">
         <div className=" h-[70px] flex justify-center items-center w-full border-b-[1px] border-gray-200">
           <div className="scale-75">
             <LogoBrand />
           </div>
         </div>
 
-        <div className="flex flex-col gap-2 w-full p-3">
+        <div className="flex flex-col gap-2 w-full p-3 ">
           {workspaceMenu.map((item, index) => {
             const isCurrent = item.route == router.pathname; //=="/workspace": router.pathname.includes(item.route);
             return (
@@ -67,7 +67,7 @@ const Workspace: NextPage<{ children: ReactNode }> = ({
         </div>
       </div>
 
-      <div className="flex-grow relative overflow-hidden">
+      <div className="flex-grow relative overflow-hidden bg-gray-200">
         <NavBarWorkpace session={session} />
         <div  className="w-full overflow-scroll">{children}</div>
       </div>

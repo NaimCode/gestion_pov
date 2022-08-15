@@ -82,14 +82,14 @@ const Table = ({ columns, title, portrait,endpoint ,filter,filter_id}: TableProp
           tableLayout: "auto",
           exportAllData: true,
           paging: true,
-
+pageSize:10,
           paginationType: "stepped",
           headerStyle: {
             backgroundColor: "#934b97",
             color: "#FFF",
             fontWeight: "bold",
           },
-         
+       
         }}
       
         editable={{

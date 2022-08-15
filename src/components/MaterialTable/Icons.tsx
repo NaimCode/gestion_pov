@@ -16,17 +16,17 @@ import Remove from '@material-ui/icons/Remove';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
-import {AiOutlineEdit,AiFillCheckCircle} from 'react-icons/ai'
-import {MdDeleteOutline} from 'react-icons/md'
+import {AiFillEdit,AiFillCheckCircle} from 'react-icons/ai'
+import {MdDelete} from 'react-icons/md'
 
 export const tableIcons = {
     Add: forwardRef((props:any, ref:any) => <AddBox {...props} ref={ref} />),
     Check: forwardRef((props:any, ref:any) => <AiFillCheckCircle {...props} ref={ref} />),
     Clear: forwardRef((props:any, ref:any) => <Clear {...props} ref={ref} />),
-    Delete: forwardRef((props:any, ref:any) => <MdDeleteOutline {...props} ref={ref} className="opacity-40 transition-all hover:opacity-100 hover:text-red-500"/>),
+    Delete: forwardRef((props:any, ref:any) => <MdDelete {...props} ref={ref} className=" transition-all hover:scale-110 text-red-500 hover:text-red-700 "/>),
     DetailPanel: forwardRef((props:any, ref:any) => <ChevronRight {...props} ref={ref} />),
     //
-    Edit: forwardRef((props:any, ref:any) => <AiOutlineEdit {...props} ref={ref} className="opacity-40 transition-all hover:opacity-100 hover:text-blue-500" />),
+    Edit: forwardRef((props:any, ref:any) => <AiFillEdit {...props} ref={ref} className="transition-all hover:scale-110 text-blue-500 hover:text-blue-700" />),
     Export: forwardRef((props:any, ref:any) => <SaveAlt {...props} ref={ref} />),
     Filter: forwardRef((props:any, ref:any) => <FilterList {...props} ref={ref} />),
     FirstPage: forwardRef((props:any, ref:any) => <FirstPage {...props} ref={ref} />),
