@@ -146,7 +146,7 @@ model Pov {
     id_user                 String
     libelle                 String
     date_debut              String
-    date_fin                String
+    date_fin                String?
     description             String
     compte_manager          String
     ingenieur_cybersecurite String

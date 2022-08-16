@@ -1,10 +1,13 @@
-import { Input, Select } from "@geist-ui/core";
+import { Button, Input, Select } from "@geist-ui/core";
+import { compareAsc } from "date-fns";
 import {
   GetServerSideProps,
   NextPage,
   InferGetServerSidePropsType,
 } from "next";
 import { unstable_getServerSession } from "next-auth";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 import Table, { TColumns } from "../../components/MaterialTable/Table";
 
 import Workspace from "../../components/WorkspaceWrapper";
@@ -39,6 +42,8 @@ const Index: NextPage = (
 ) => {
   const client = trpc.useQuery(["client.getAll"]);
   const appliances = trpc.useQuery(["appliance.getAll"]);
+  const router = useRouter();
+
   const columnsPov: Array<TColumns> = [
     {
       title: "Libellé",
@@ -87,6 +92,7 @@ const Index: NextPage = (
         minWidth:"200px"
       },
     },
+    
     {
       title: "Date début",
       field: "date_debut",
@@ -120,6 +126,7 @@ const Index: NextPage = (
         
       },
       editComponent:(props:any)=>{
+        console.log(props.date_debut)
         return (
           <Input
           htmlType="date"
@@ -130,7 +137,29 @@ const Index: NextPage = (
         )
       }
     },
+    {
+      title: "Séances",
+      field: "seances",
 
+      render: (props: any) => {
+     
+      const date=props.date_fin && props.date_fin!=""?new Date(props.date_fin):new Date()
+      console.log(date)
+        const show = compareAsc(new Date(), date)==1?false:true
+
+        return show?
+        
+        <Button
+         onClick={()=>router.push(`/workspace/seances/${props.id}`)}
+         auto
+         scale={3/4}
+        >
+         voir la liste
+        </Button>: <div></div>
+      },
+
+      editComponent: (props: any) => (<span></span>),
+    },
     {
       title: "Client",
       field: "client.libelle",

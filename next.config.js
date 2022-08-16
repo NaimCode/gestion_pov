@@ -1,5 +1,9 @@
 module.exports = {
   images: {
-    domains: ["avatars.githubusercontent.com", "lh3.googleusercontent.com"],
+    domains: [
+      "avatars.githubusercontent.com",
+      "lh3.googleusercontent.com",
+      "lh3.googleusercontent.com",
+    ],
   },
 };

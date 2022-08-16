@@ -1,5 +1,5 @@
 import { Button } from "@geist-ui/core";
-import type { GetServerSideProps, NextPage } from "next";
+import type { GetServerSideProps, NextPage, InferGetServerSidePropsType } from "next";
 import { unstable_getServerSession } from "next-auth";
 import Head from "../components/Head";
 
@@ -32,7 +32,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 };
 
-const Home: NextPage = (props) => {
+const Home: NextPage = (props: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   
 const deleteUser=trpc.useMutation(['user.delete'])
   return (

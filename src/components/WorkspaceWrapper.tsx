@@ -21,7 +21,8 @@ import { LogoBrand } from "./LogoBrand";
 import Image from "next/image";
 import { trpc } from "../utils/trpc";
 import ProviderIcon from "./ProviderIcon";
-
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 const Workspace: NextPage<{ children: ReactNode }> = ({
   children,
 }: {
@@ -35,7 +36,7 @@ const Workspace: NextPage<{ children: ReactNode }> = ({
   return (
     <main className="relative flex flex-row   h-screen overflow-hidden w-screen">
       <Head title={user.name!} description={`Mon workspace`} />
-
+      <ToastContainer />
       <div className="min-w-[250px]  h-full  border-r-[1px] border-gray-200 flex flex-col items-center">
         <div className=" h-[70px] flex justify-center items-center w-full border-b-[1px] border-gray-200">
           <div className="scale-75">
