@@ -11,6 +11,8 @@ import { clientRouter } from "./controllers/client";
 import { contactRouter } from "./controllers/contact";
 import { povRouter } from "./controllers/pov";
 import { suiviRouter } from "./controllers/suivi";
+import { seanceRouter } from "./controllers/seance";
+import { participantRouter } from "./controllers/participant";
 
 
 export const appRouter = createRouter()
@@ -23,6 +25,8 @@ export const appRouter = createRouter()
   .merge('contact.',contactRouter)
   .merge('pov.',povRouter)
   .merge('suivi.',suiviRouter)
+  .merge('seance.',seanceRouter)
+  .merge('participant.',participantRouter)
   ;
 
 // export type definition of API

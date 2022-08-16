@@ -56,10 +56,6 @@ export const workspaceMenu: Array<TWorkspaceMenu> = [
     icon:<AiTwotoneCheckCircle/>,
     divider:true
   },
-  {
-    name: "Séances",
-    route: "/workspace/seances",
-    icon:<AiFillSchedule/>
-  },
+
 
 ];

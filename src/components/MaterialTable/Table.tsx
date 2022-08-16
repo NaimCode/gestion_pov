@@ -11,6 +11,7 @@ export type TColumns = {
   align?: any;
   editComponent?: any;
   render?: any;
+
 };
 type TableProps = {
   columns: Array<TColumns>;
@@ -19,6 +20,7 @@ type TableProps = {
   endpoint: string;
   filter?: Function;
   filter_id?: string;
+  limit?:number
 };
 const Table = ({
   columns,
@@ -26,7 +28,7 @@ const Table = ({
   portrait,
   endpoint,
   filter,
-  filter_id,
+  filter_id,limit
 }: TableProps) => {
   const afterEffectHandler = {
     onSuccess: () => {
@@ -34,7 +36,15 @@ const Table = ({
     },
     onError: (data: any) => {
       console.log(data);
-      //call notification
+      // toast.error("Erreur est survenue", {
+      //   position: "bottom-left",
+      //   autoClose: 5000,
+      //   hideProgressBar: false,
+      //   closeOnClick: true,
+      //   pauseOnHover: true,
+      //   draggable: true,
+      //   progress: undefined,
+      //   });;
     },
   };
   const query = trpc.useQuery([(endpoint + ".getAll") as any]);
@@ -160,7 +170,10 @@ switch(type){
           },
         }}
         editable={{
-          onRowAdd: (newData) =>
+          onRowAdd:limit?filter!(query.data).length>=1?undefined:  (newData) =>
+            new Promise((resolve, reject) => {
+              onAdd({ newData, resolve, reject });
+            }):(newData) =>
             new Promise((resolve, reject) => {
               onAdd({ newData, resolve, reject });
             }),

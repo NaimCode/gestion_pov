@@ -10,6 +10,7 @@ import Table, { TColumns } from "../../../components/MaterialTable/Table";
 import Workspace from "../../../components/WorkspaceWrapper";
 import { trpc } from "../../../utils/trpc";
 import { authOptions } from "../../api/auth/[...nextauth]";
+import { prisma } from '../../../server/db/client';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
@@ -26,20 +27,27 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
     };
   }
+const id_pov=context.query.id_pov as string;
 
+
+  const pov=await prisma.pov.findFirst({where:{id:id_pov}});
   return {
     props: {
       session,
+      id_pov,
+      pov
     },
   };
+ 
 };
 
 const Index: NextPage = (
   props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) => {
-  const pov = trpc.useQuery(["pov.getAll"]);
+    const readOnly = props.id_pov ? true : false;
+
   const prestation = trpc.useQuery(["prestation.getAll"]);
-  const columnsPov: Array<TColumns> = [
+  const columnsSuivis: Array<TColumns> = [
     {
       title: "Compte rendu",
       field: "compte_rendu",
@@ -102,39 +110,54 @@ const Index: NextPage = (
       },
     },
     {
-      title: "POV",
-      field: "pov.libelle",
-      cellStyle:{
-       
-        whiteSpace:"nowrap"
-      },
-
-      editComponent: (propsTable: any) => {
-       
-        return (
-          <Select
+        title: "POV",
+        field: "pov.libelle",
+        // editComponent:(props:any)=>{
   
-            value={propsTable.value}
-            onChange={propsTable.onChange}
-            placeholder="Choisir un pov">
+        //  return <AutoComplete  value={props.value}  disabled={readOnly}  onSelect={(e: any) => props.onChange(e)} disableFreeSolo options={client.data?.map((t,i)=>({label:t.libelle,value:t.libelle}))} />
+  
+        // }
+        editComponent: (propsTable: any) => {
+          let l = props.pov.libelle;
+       
+    
+          
+          return (
+            <Select
+              disabled={readOnly}
+              value={readOnly ? l : propsTable.value}
+              placeholder="Choisir un pov">
+              
+                <Select.Option  value={props.pov.libelle}>
+                  {props.pov.libelle}
+                </Select.Option>
             
-            {pov.data?.map((t, i) => (
-              <Select.Option key={i} value={t.libelle}>
-                {t.libelle}
-              </Select.Option>
-            ))}
-          </Select>
-        );
+            </Select>
+          );
+        },
       },
-    },
   ];
 
+
+  const filter = (data: Array<any>) => {
+    return data ? data.filter((t) => t.id_pov == props.id_pov) : [];
+  };
   return (
     <Workspace>
-      <Table title="Suivis" columns={columnsPov} endpoint="suivi" />
+      <Table
+        title={
+       "Suivi de " +
+           props.pov.libelle
+     
+        }
+        limit={1}
+        filter={readOnly ? filter : undefined}
+        filter_id={props.id_pov}
+        columns={columnsSuivis}
+        endpoint="suivi"
+      />
     </Workspace>
   );
-  
 };
 
 export default Index;

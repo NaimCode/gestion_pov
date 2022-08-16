@@ -82,8 +82,8 @@ model Appliance {
     id_user String
     libelle String
     disponibilite Boolean
-    dbid String
-    reference String
+    dbid String?
+    reference String?
     id_type String 
     type    Type   @relation(fields: [id_type], references: [id])
     povs     Pov[]
@@ -93,8 +93,8 @@ model Client {
     id       String    @id @default(cuid())
     id_user  String
     libelle  String
-    secteur  String
-    activite String
+    secteur  String?
+    activite String?
     contacts Contact[]
     povs     Pov[]
 }
@@ -103,10 +103,10 @@ model Contact {
     id        String @id @default(cuid())
     id_user   String
     nom       String
-    prenom    String
-    telephone String
-    email     String
-    fonction  String
+    prenom    String?
+    telephone String?
+    email     String?
+    fonction  String?
     id_client String 
     client    Client @relation(fields: [id_client], references: [id],onDelete:Cascade)
 }
@@ -115,6 +115,7 @@ model Participant {
     id        String @id @default(cuid())
     id_user   String
     nom       String
+    prenom    String?
     id_seance String 
     seance    Seance @relation(fields: [id_seance], references: [id])
 }
@@ -122,10 +123,10 @@ model Participant {
 model Seance {
     id           String        @id @default(cuid())
     id_user      String
-    date         DateTime
+    date         String?
     resume       String
     participants Participant[]
-    id_pov       String        @unique
+    id_pov       String        
     pov          Pov           @relation(fields: [id_pov], references: [id])
 }
 
@@ -133,8 +134,8 @@ model Suivi {
     id                String     @id @default(cuid())
     id_user           String
     offre_commerciale Boolean
-    montant           String
-    compte_rendu      String
+    montant           String?
+    compte_rendu      String?
     id_prestation     String     
     id_pov            String     
     prestation        Prestation @relation(fields: [id_prestation], references: [id])
@@ -145,12 +146,12 @@ model Pov {
     id                      String    @id @default(cuid())
     id_user                 String
     libelle                 String
-    date_debut              String
+    date_debut              String?
     date_fin                String?
-    description             String
-    compte_manager          String
-    ingenieur_cybersecurite String
-    analyste_cybersecurite  String
+    description             String?
+    compte_manager          String?
+    ingenieur_cybersecurite String?
+    analyste_cybersecurite  String?
     suivis                  Suivi[]
     seances                 Seance[]
     id_client               String    

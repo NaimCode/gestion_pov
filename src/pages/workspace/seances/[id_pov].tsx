@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import {
   GetServerSideProps,
   NextPage,
@@ -8,10 +9,11 @@ import { unstable_getServerSession } from "next-auth";
 import Workspace from "../../../components/WorkspaceWrapper";
 import { authOptions } from "../../api/auth/[...nextauth]";
 import Table, { TColumns } from "../../../components/MaterialTable/Table";
-import { AutoComplete, Checkbox, Select } from "@geist-ui/core";
+import { AutoComplete, Button, Checkbox, Input, Select } from "@geist-ui/core";
 import { trpc } from "../../../utils/trpc";
 import { useState } from "react";
 import { prisma } from "../../../server/db/client";
+import { useRouter } from "next/router";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
@@ -29,12 +31,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
   }
   console.log(context.query);
-  const id_client = context.query.id_client;
-
+  const id_pov:string = context.query.id_pov as string;
+  const pov=await prisma.pov.findFirst({where:{id:id_pov}});
   return {
     props: {
       session,
-      id_client,
+      id_pov,
+      pov,
     },
   };
 };
@@ -42,53 +45,61 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 const index: NextPage = (
   props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) => {
-  const client = trpc.useQuery(["client.getAll"]);
-  const readOnly = props.id_client ? true : false;
+  const router=useRouter()
+  const readOnly = props.id_pov ? true : false;
 
   let columnsClient: Array<TColumns> = [
     {
-      title: "Nom",
-      field: "nom",
+      title: "Résumé",
+      field: "resume",
     },
     {
-      title: "Prénom",
-      field: "prenom",
-    },
-    {
-      title: "Téléphone",
-      field: "telephone",
+      title: "Date",
+      field: "date",
       cellStyle: {
         opacity: "70%",
         fontSize: "14px",
+        minWidth:"200px"
+        
       },
+      editComponent:(props:any)=>{
+      
+        return (
+          <Input
+          htmlType="date"
+          value={props.value}
+          onChange={(e: any) => props.onChange(e.target.value)}
+         
+        /> 
+        )
+      }
     },
     {
-      title: "Email",
-      field: "email",
-      cellStyle: {
-        opacity: "70%",
-        fontSize: "14px",
-      },
-    },
-    {
-      title: "Fonction",
-      field: "fonction",
-      cellStyle: {
-        opacity: "70%",
-        fontSize: "14px",
-      },
-    },
+      title: "Participants",
+      field: "participants",
 
+      render: (rowData: any) => (
+        <Button
+         onClick={()=>router.push(`/workspace/seances/participants/${rowData.id}`)}
+         auto
+         scale={3/4}
+        >
+         voir la liste
+        </Button>
+      ),
+
+      editComponent: (props: any) => (<span></span>),
+    },
     {
-      title: "Client",
-      field: "client.libelle",
+      title: "pov",
+      field: "pov.libelle",
       // editComponent:(props:any)=>{
 
       //  return <AutoComplete  value={props.value}  disabled={readOnly}  onSelect={(e: any) => props.onChange(e)} disableFreeSolo options={client.data?.map((t,i)=>({label:t.libelle,value:t.libelle}))} />
 
       // }
       editComponent: (propsTable: any) => {
-        let l = client.data?.filter((f) => f.id == props.id_client)[0]?.libelle;
+        let l = props.pov.libelle;
      
   
         
@@ -97,11 +108,11 @@ const index: NextPage = (
             disabled={readOnly}
             value={readOnly ? l : propsTable.value}
             placeholder="Choisir un client">
-            {client.data?.map((t, i) => (
-              <Select.Option key={i} value={t.libelle}>
-                {t.libelle}
+            
+              <Select.Option  value={props.pov.libelle}>
+                {props.pov.libelle}
               </Select.Option>
-            ))}
+          
           </Select>
         );
       },
@@ -109,20 +120,20 @@ const index: NextPage = (
   ];
 
   const filter = (data: Array<any>) => {
-    return data ? data.filter((t) => t.id_client == props.id_client) : [];
+    return data ? data.filter((t) => t.id_pov == props.id_pov) : [];
   };
   return (
     <Workspace>
       <Table
         title={
-       "Contacts du client " +
-           client?.data?.filter((f) => f.id == props.id_client)[0]?.libelle
+       "Séances de " +
+           props.pov.libelle
      
         }
         filter={readOnly ? filter : undefined}
-        filter_id={props.id_client}
+        filter_id={props.id_pov}
         columns={columnsClient}
-        endpoint="contact"
+        endpoint="seance"
       />
     </Workspace>
   );

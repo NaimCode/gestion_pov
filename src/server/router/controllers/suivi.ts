@@ -22,7 +22,11 @@ export const suiviRouter = createRouter()
     input: z.any(),
     async resolve({ input, ctx }) {
       const { session, prisma } = ctx;
-      const pov =await prisma.pov.findFirst({
+      const pov =input.filter_id?await prisma.pov.findFirst({
+        where: {
+         id:input.filter_id,
+        },
+      }): await prisma.pov.findFirst({
         where: {
           libelle: {
             equals: input.pov.libelle,
@@ -38,6 +42,7 @@ export const suiviRouter = createRouter()
       });
       console.log(input);
       delete input.pov;
+      delete input.filter_id;
       delete input.prestation;
       const data = await prisma[table]
         .create({
@@ -58,7 +63,11 @@ export const suiviRouter = createRouter()
   .mutation("update", {
     input: z.any(),
     async resolve({ input, ctx }) {
-        const pov =await ctx.prisma.pov.findFirst({
+        const pov =input.filter_id?await ctx.prisma.pov.findFirst({
+          where: {
+           id:input.filter_id,
+          },
+        }):await ctx.prisma.pov.findFirst({
             where: {
               libelle: {
                 equals: input.pov.libelle,
@@ -74,6 +83,7 @@ export const suiviRouter = createRouter()
           });
          
           delete input.pov;
+          delete input.filter_id;
           delete input.prestation;
       return await ctx.prisma[table].update({
         where: {

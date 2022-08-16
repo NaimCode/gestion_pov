@@ -138,12 +138,17 @@ const Index: NextPage = (
       }
     },
     {
-      title: "Séances",
+      title: "Séances / Suivi",
       field: "seances",
+      cellStyle: {
+        whiteSpace: "nowrap",
+        minWidth:"200px",
+        align:'center'
+      },
 
       render: (props: any) => {
      
-      const date=props.date_fin && props.date_fin!=""?new Date(props.date_fin):new Date()
+      const date=props.date_fin && props.date_fin!=""?new Date(props.date_fin):new Date('3020-01-01')
       console.log(date)
         const show = compareAsc(new Date(), date)==1?false:true
 
@@ -152,10 +157,19 @@ const Index: NextPage = (
         <Button
          onClick={()=>router.push(`/workspace/seances/${props.id}`)}
          auto
+         type="success"
+       
          scale={3/4}
         >
-         voir la liste
-        </Button>: <div></div>
+         séances
+        </Button>: <Button 
+         onClick={()=>router.push(`/workspace/suivis/${props.id}`)}
+         auto
+         type="error"
+         scale={3/4}
+        >
+         suivi
+        </Button>
       },
 
       editComponent: (props: any) => (<span></span>),
@@ -164,7 +178,8 @@ const Index: NextPage = (
       title: "Client",
       field: "client.libelle",
       cellStyle:{
-        whiteSpace:"nowrap"
+        whiteSpace:"nowrap",
+       
       },
       // editComponent:(props:any)=>{
 
