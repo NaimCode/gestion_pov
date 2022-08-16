@@ -20,7 +20,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/NaimCode/hyla">
-    <img src="images/logo.png" alt="Logo" width="80vw">
+    <img src="images/big_logo.png" alt="Logo" width="80vw">
   </a>
 
 <h3 align="center">Hyla | Gestionnaire de POV</h3>
@@ -46,7 +46,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-![Hyla](images/auth.mp4 "Auth page")
+![Hyla](images/auth.gif "Auth page")
         
 ![Hyla](images/dashboard1.png "Dashboard 1")
            
