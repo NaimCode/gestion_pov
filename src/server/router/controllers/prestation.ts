@@ -23,13 +23,13 @@ export const prestationRouter = createRouter()
     async resolve({ input, ctx }) {
       const { session, prisma } = ctx;
 
-      const data = await prisma.prestation.create({
+     return await prisma.prestation.create({
         data: {
           libelle: input.libelle,
           id_user: session?.user?.id!,
         },
       });
-      return data;
+ 
     },
   })
   .mutation("update", {

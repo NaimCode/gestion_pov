@@ -21,18 +21,14 @@ export const clientRouter = createRouter()
     async resolve({ input, ctx }) {
       const { session, prisma } = ctx;
 console.log(input)
-      const data = await prisma[table].create({
+      return await prisma[table].create({
         data: {
           secteur:input.secteur||'privé',
             activite:input.activite,
           libelle: input.libelle,
           id_user: session?.user?.id!,
         },
-      }).catch(err=>{
-        console.log(err)
-        }
-        );
-      return data;
+      })
     },
   })
   .mutation("update", {

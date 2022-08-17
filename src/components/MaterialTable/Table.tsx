@@ -161,7 +161,7 @@ switch(type){
           tableLayout: "auto",
           exportAllData: true,
           paging: true,
-          pageSize: 10,
+         
           paginationType: "stepped",
           headerStyle: {
             backgroundColor: "#934b97",

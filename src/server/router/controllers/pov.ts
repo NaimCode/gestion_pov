@@ -39,7 +39,7 @@ export const povRouter = createRouter()
       console.log(input);
       delete input.client;
       delete input.appliance;
-      const data = await prisma[table]
+     return await prisma[table]
         .create({
           data: {
             ...input,
@@ -48,10 +48,7 @@ export const povRouter = createRouter()
             id_user: session?.user?.id!,
           },
         })
-        .catch((err) => {
-          console.log(err);
-        });
-      return data;
+      
     },
   })
   .mutation("update", {

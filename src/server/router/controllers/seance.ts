@@ -27,18 +27,13 @@ export const seanceRouter = createRouter()
       const id_pov=input.filter_id
       delete input.pov;
       delete input.filter_id;
-      const data = await prisma[table].create({
+      return await prisma[table].create({
         data: {
           ...input,
           id_pov,
           id_user: session?.user?.id!,
         },
-      }).catch(err=>{
-        console.log(err)
-        
-        }
-        );
-      return data;
+      })
     },
   })
   .mutation("update", {

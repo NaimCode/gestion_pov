@@ -30,7 +30,7 @@ export const applianceRouter = createRouter()
         },
       });
 
-      const data = await prisma[table].create({
+      return await prisma[table].create({
         data: {
           reference: input.reference,
           dbid: input.dbid,
@@ -40,10 +40,7 @@ export const applianceRouter = createRouter()
             input.disponibilite != undefined ? input.disponibilite : false,
           id_user: session?.user?.id!,
         },
-      }).catch((e) => {
-        console.log(e);
-      });
-      return data;
+      })
     },
   })
   .mutation("update", {

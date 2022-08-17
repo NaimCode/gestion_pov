@@ -35,7 +35,7 @@ export const contactRouter = createRouter()
       console.log(input);
       delete input.client;
       delete input.filter_id;
-      const data = await prisma[table]
+    return await prisma[table]
         .create({
           data: {
             ...input,
@@ -43,10 +43,6 @@ export const contactRouter = createRouter()
             id_user: session?.user?.id!,
           },
         })
-        .catch((err) => {
-          console.log(err);
-        });
-      return data;
     },
   })
   .mutation("update", {

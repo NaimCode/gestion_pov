@@ -44,7 +44,7 @@ export const suiviRouter = createRouter()
       delete input.pov;
       delete input.filter_id;
       delete input.prestation;
-      const data = await prisma[table]
+      return await prisma[table]
         .create({
           data: {
             ...input,
@@ -54,10 +54,7 @@ export const suiviRouter = createRouter()
             id_user: session?.user?.id!,
           },
         })
-        .catch((err) => {
-          console.log(err);
-        });
-      return data;
+ 
     },
   })
   .mutation("update", {
@@ -100,9 +97,7 @@ export const suiviRouter = createRouter()
          
 
         },
-      })     .catch((err) => {
-        console.log(err);
-      });;
+      }) 
     },
   })
   .mutation("delete", {

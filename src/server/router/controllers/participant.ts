@@ -27,18 +27,14 @@ export const participantRouter = createRouter()
       const id_seance=input.filter_id
       delete input.seance;
       delete input.filter_id;
-      const data = await prisma[table].create({
+      return await prisma[table].create({
         data: {
           ...input,
           id_seance,
           id_user: session?.user?.id!,
         },
-      }).catch(err=>{
-        console.log(err)
-        
-        }
-        );
-      return data;
+      })
+     
     },
   })
   .mutation("update", {
